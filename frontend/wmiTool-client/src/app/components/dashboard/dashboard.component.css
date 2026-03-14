@@ -1,49 +1,74 @@
+/* ==============================
+   CSS Variables
+   ============================== */
 :root {
   --primary-color: #db9c13;
   --background-color: #f0f2f5;
+  --card-background: #ffffff;
+  --card-border-color: #ecf0f1;
+  --label-color: #db9c13;
 }
 
+/* ==============================
+   Global Styles
+   ============================== */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--background-color);
-  color: var(--primary-color);
+  background-color: var(--background-color, #f0f2f5);
+  color: var(--primary-color, #000);
   margin: 20px;
 }
 
-/* Main title */
+/* ==============================
+   Main title
+   ============================== */
 h1 {
   text-align: center;
-  color: var(--primary-color);
+  color: var(--primary-color, #000);
   margin-bottom: 40px;
 }
 
-/* Dashboard container */
+/* ==============================
+   Dashboard container
+   ============================== */
 .dashboard {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
 }
 
-/* Card style for each section */
+/* ==============================
+   Card style for each section
+   ============================== */
 .card {
-  background-color: var(--card-background);
+  background-color: var(--card-background, #fff);
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* Section headers inside cards */
+/* Card hover effect */
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* ==============================
+   Section headers inside cards
+   ============================== */
 .card h3 {
   margin-top: 0;
   margin-bottom: 15px;
   font-size: 1.2em;
-  color: var(--primary-color);
-  border-bottom: 2px solid #ecf0f1;
+  color: var(--primary-color, #000);
+  border-bottom: 2px solid var(--card-border-color, #ecf0f1);
   padding-bottom: 5px;
 }
 
-/* Card content */
+/* ==============================
+   Card content
+   ============================== */
 .card div {
   line-height: 1.6;
 }
@@ -51,5 +76,5 @@ h1 {
 /* Labels bold */
 .card div span.label {
   font-weight: 600;
-  color: var(--primary-color);
+  color: var(--label-color, #000);
 }
