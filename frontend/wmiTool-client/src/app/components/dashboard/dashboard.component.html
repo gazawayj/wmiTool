@@ -1,10 +1,26 @@
 <h1>SystemScope Dashboard</h1>
 
 <h2>CPU</h2>
-
 <div>
-  Name: {{cpu?.Name}} <br>
-  Cores: {{cpu?.NumberOfCores}}<br>
-  Max Clock: {{cpu?.MaxClockSpeed}} MHz
+  Name: {{ cpu?.Name }} <br>
+  Cores: {{ cpu?.NumberOfCores }}<br>
+  Max Clock: {{ cpu?.MaxClockSpeed }} MHz
 </div>
 
+<h2>Memory</h2>
+<div>
+  Capacity: {{ mem?.Capacity }} <br>
+  Speed: {{ mem?.Speed }} <br>
+</div>
+
+<h2>Disk</h2>
+<div>
+  Volume Name: {{ disk?.VolumeName }} <br>
+  Size: {{ disk?.Size }} <br>
+  Free Space: {{ disk?.FreeSpace }} <br>
+</div>
+
+<h2>System</h2>
+<div>
+  System Type: {{ sys?.SystemType }} <br>
+</div>

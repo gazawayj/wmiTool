@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SystemService } from '../../services/wmi.service';
 
@@ -11,11 +11,16 @@ import { SystemService } from '../../services/wmi.service';
 })
 export class DashboardComponent implements OnInit {
   cpu: any;
+  mem: any;
+  disk: any;
+  sys: any;
 
-  private sys = inject(SystemService);
-  private platformId = inject(PLATFORM_ID);
+  private sysServ = inject(SystemService);
 
   ngOnInit() {
-    this.sys.getCPU().subscribe(data => this.cpu = data);
+    this.sysServ.getCPU().subscribe(data => this.cpu = data);
+    this.sysServ.getMem().subscribe(data => this.mem = data);
+    this.sysServ.getDisk().subscribe(data => this.disk = data);
+    this.sysServ.getSys().subscribe(data => this.sys = data);
   }
 }
