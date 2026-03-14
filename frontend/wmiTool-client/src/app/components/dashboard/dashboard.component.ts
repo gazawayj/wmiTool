@@ -1,7 +1,7 @@
-import { Component, OnInit, inject, Inject, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, inject, Inject, PLATFORM_ID, ViewEncapsulation, NgZone } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { SystemService } from '../../services/system.service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, interval, startWith, Subscription, switchMap } from 'rxjs';
 
 /**
  * DashboardComponent
@@ -34,68 +34,74 @@ export class DashboardComponent implements OnInit {
   clientScreen: string | undefined;
   clientUserAgent: string | undefined;
 
-  lastUpdate!: Date;
+  lastUpdate: Date | null = null;
 
   private sysServ = inject(SystemService);
+  private ngZone = inject(NgZone);
 
   /**
    * Constructor used for platform detection.
    *
    * @param platformId Angular platform identifier
    */
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
+
+  private refreshSub!: Subscription;
 
   /**
-   * Angular lifecycle hook executed on component initialization.
-   *
    * Retrieves server hardware information and client hardware
    * information when running inside a browser environment.
    */
   ngOnInit(): void {
 
-    forkJoin({
-      cpu: this.sysServ.getCPU(),
-      mem: this.sysServ.getMem(),
-      disk: this.sysServ.getDisk(),
-      sys: this.sysServ.getSys()
-    }).subscribe({
-      next: data => {
+    // Poll server every 3 seconds, but emit immediately on load
+    this.refreshSub = interval(3000)
+      .pipe(
+        startWith(0),
+        switchMap(() =>
+          forkJoin({
+            cpu: this.sysServ.getCPU(),
+            mem: this.sysServ.getMem(),
+            disk: this.sysServ.getDisk(),
+            sys: this.sysServ.getSys(),
+          })
+        )
+      ).subscribe({
+        next: data => {
+          this.lastUpdate = new Date();
+          /* Server hardware */
+          this.cpu = data.cpu;
+          this.mem = data.mem;
+          if (data.mem) {
+            const formatTotal = Number(this.sysServ.bytesToFormat(data.mem.TotalVisibleMemorySize)).toPrecision(3);
+            this.mem.TotalVisibleMemorySize = formatTotal;
+            const formatFree = Number(this.sysServ.bytesToFormat(data.mem.FreePhysicalMemory)).toPrecision(3);
+            this.mem.FreePhysicalMemory = formatFree;
+          }
+          this.disk = data.disk;
+          if (data.disk) {
+            const formatTotal = Number(this.sysServ.bytesToFormat(data.disk.Size)).toPrecision(3);
+            this.disk.Size = formatTotal;
+            const formatFree = Number(this.sysServ.bytesToFormat(data.disk.FreeSpace)).toPrecision(3);
+            this.disk.FreeSpace = formatFree;
+          }
+          this.sys = data.sys;
 
-        /* Server hardware */
-        this.cpu = data.cpu;
-        this.mem = data.mem;
-        if (data.mem){
-          const formatTotal = Number(this.sysServ.bytesToFormat(data.mem.TotalVisibleMemorySize)).toPrecision(3);
-          this.mem.TotalVisibleMemorySize = formatTotal;
-          const formatFree = Number(this.sysServ.bytesToFormat(data.mem.FreePhysicalMemory)).toPrecision(3);
-          this.mem.FreePhysicalMemory = formatFree;
+          /* Client hardware */
+          if (isPlatformBrowser(this.platformId)) {
+
+            const client = this.sysServ.getClientInfo();
+
+            this.clientPlatform = client.platform;
+            this.clientCpuThreads = client.cpuThreads;
+            this.clientMemory = client.deviceMemory;
+            this.clientScreen = client.screenResolution;
+            this.clientUserAgent = client.userAgent;
+          }
+        },
+        error: err => {
+          console.error('Failed to fetch system data:', err);
         }
-        this.disk = data.disk;
-        if (data.disk){
-          const formatTotal = Number(this.sysServ.bytesToFormat(data.disk.Size)).toPrecision(3);
-          this.disk.Size = formatTotal;
-          const formatFree = Number(this.sysServ.bytesToFormat(data.disk.FreeSpace)).toPrecision(3);
-          this.disk.FreeSpace = formatFree;
-        }
-        this.sys = data.sys;
-
-        this.lastUpdate = new Date();
-
-        /* Client hardware */
-        if (isPlatformBrowser(this.platformId)) {
-
-          const client = this.sysServ.getClientInfo();
-
-          this.clientPlatform = client.platform;
-          this.clientCpuThreads = client.cpuThreads;
-          this.clientMemory = client.deviceMemory;
-          this.clientScreen = client.screenResolution;
-          this.clientUserAgent = client.userAgent;
-        }
-      },
-      error: err => {
-        console.error('Failed to fetch system data:', err);
-      }
-    });
+      });
   }
 }
