@@ -2,12 +2,14 @@
   "name": "wmi-tool-client",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --host 0.0.0.0 --port 4200",
+    "build": "ng build --configuration production --base-href /gis-webview/",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "serve:ssr:wmiTool-client": "node dist/wmiTool-client/server/server.mjs"
+    "preview": "ng serve --host 0.0.0.0 --port 4200",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage --reporter=verbose --reporter=html",
+    "lint": "ng lint"
   },
   "private": true,
   "packageManager": "npm@10.9.4",
