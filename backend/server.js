@@ -17,7 +17,7 @@ function runQuery(query, res) {
 }
 
 //get CPU name, number of corse, and max clock speed
-app.get('/api/cpu', (req, res) => runQuery("SELECT Name,NumberOfCores,MaxClockSpeed FROM Win32_Processor", res));
+app.get('/api/cpu', (req, res) => runQuery("SELECT Name,NumberOfCores,MaxClockSpeed,LoadPercentage FROM Win32_Processor", res));
 app.get('/api/memory', (req, res) => runQuery("SELECT TotalVisibleMemorySize,FreePhysicalMemory FROM Win32_OperatingSystem", res));
 app.get('/api/disk', (req, res) => runQuery("SELECT VolumeName,Size,FreeSpace FROM Win32_LogicalDisk", res));
 app.get('/api/sys', (req, res) => runQuery("SELECT SystemType FROM Win32_ComputerSystem", res));
