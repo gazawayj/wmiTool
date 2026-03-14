@@ -40,7 +40,7 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Build Angular project
-        run: npx ng build --base-href /gazawayj-wmitool/ --deploy-url /wmitool/
+        run: npx ng build --configuration production --base-href /wmiTool/ --deploy-url /wmiTool/
 
       - name: Upload build artifact
         uses: actions/upload-pages-artifact@v3
