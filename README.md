@@ -5,7 +5,7 @@ wmiTool is a lightweight learning project to explore **Windows Management Instru
 
 ## Live Demo
 https://gazawayj.github.io/wmiTool/
->> Hosted on GitHub Pages (frontend) and AWS EC2 (backend):
+>>> Hosted on GitHub Pages (frontend) and AWS EC2 (backend)
 
 ---
 
@@ -35,7 +35,10 @@ https://gazawayj.github.io/wmiTool/
 
 ## Notes
 
-Backend currently reports AWS EC2 server hardware, not local machine stats.
+Backend reports AWS EC2 server hardware, not local machine stats.
+
+I use Linux as my main driver, so a windows server was the best way 
+to practice WMI.
 
 ---
 
