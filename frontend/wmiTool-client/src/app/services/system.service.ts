@@ -87,7 +87,7 @@ export class SystemService {
    * @param bytes Number of bytes.
    * @returns Value converted to GiB.
    */
-  bytesToFormat(bytes: number): number {
+  bytesToFormat(bytes: number){
     if (bytes <= 1) return bytes;
     
     const units = ["Bytes", "KB", "MB", "GB", "TB", "PB"];
