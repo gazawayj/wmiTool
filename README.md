@@ -18,7 +18,7 @@ https://gazawayj.github.io/wmiTool/
 
 ### Frontend
 - Angular application displaying server hardware details in a clean dashboard
-- Fully static build deployable to GitHub Pages
+- Build deployable to GitHub Pages
 - Consumes backend API for live server data
 
 ---
@@ -37,8 +37,8 @@ https://gazawayj.github.io/wmiTool/
 
 Backend reports AWS EC2 server hardware, not local machine stats.
 
-I use Linux as my main driver, so a windows server was the best way 
-to practice WMI.
+I use Linux as my main driver, so a windows server was the more practical
+way to practice WMI.
 
 ---
 
