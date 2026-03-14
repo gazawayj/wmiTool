@@ -5,7 +5,7 @@ const { exec } = require('child_process');
 const app = express();
 app.use(cors());
 
-function runWMI(query, res) {
+function runQuery(query, res) {
     const command = `powershell -Command "Get-WmiObject -Query \\"${query}\\" | ConvertTo-Json"`;
     exec(command, (error, stdout) => {
         if (error) {
@@ -17,8 +17,8 @@ function runWMI(query, res) {
 }
 
 //get CPU name, number of corse, and max clock speed
-app.get('/api/cpu', (req, res) => runWMI("SELECT Name,NumberOfCores,MaxClockSpeed FROM Win32_Processor", res));
-app.get('/api/memory', (req, res) => runWMI("SELECT Capacity,Speed FROM Win32_PhysicalMemory", res));
-app.get('/api/disk', (req, res) => runWMI("SELECT VolumeName,Size,FreeSpace FROM Win32_LogicalDisk", res));
-app.get('/api/sys', (req, res) => runWMI("SELECT SystemType FROM Win32_ComputerSystem", res));
+app.get('/api/cpu', (req, res) => runQuery("SELECT Name,NumberOfCores,MaxClockSpeed FROM Win32_Processor", res));
+app.get('/api/memory', (req, res) => runQuery("SELECT TotalVisibleMemorySize,FreePhysicalMemory FROM Win32_OperatingSystem", res));
+app.get('/api/disk', (req, res) => runQuery("SELECT VolumeName,Size,FreeSpace FROM Win32_LogicalDisk", res));
+app.get('/api/sys', (req, res) => runQuery("SELECT SystemType FROM Win32_ComputerSystem", res));
 app.listen(3000, () => console.log("Backend running on port 3000"));
