@@ -33,32 +33,20 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        id: node-cache
-        with:
-          path: frontend/node_modules
-          key: frontend-node-${{ runner.os }}-${{ hashFiles('frontend/package-lock.json') }}
-
-      - name: Install dependencies (cache miss)
-        if: steps.node-cache.outputs.cache-hit != 'true'
-        run: npm install --legacy-peer-deps
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
 
       - name: Build Angular project
-        run: npx ng build
+        run: npx ng build --base-href /gazawayj-wmitool/
 
       - name: Upload build artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: frontend/wmiTool-client/dist/wmiTool-client
+          path: frontend/wmiTool-client/dist/wmiTool-client/browser
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
-
-    concurrency:
-      group: deploy-front-${{ github.ref }}
-      cancel-in-progress: true
 
     environment:
       name: github-pages
