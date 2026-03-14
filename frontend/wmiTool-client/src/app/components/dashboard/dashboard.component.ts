@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, inject, Inject, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { SystemService } from '../../services/wmi.service';
 import { forkJoin } from 'rxjs';
@@ -8,7 +8,8 @@ import { forkJoin } from 'rxjs';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent implements OnInit {
   cpu: any;
