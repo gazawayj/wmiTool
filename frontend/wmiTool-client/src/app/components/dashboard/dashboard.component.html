@@ -1,26 +1,51 @@
 <h1>System Dashboard</h1>
 
-<h2>CPU</h2>
-<div>
-  Name: {{ cpu?.Name }} <br>
-  Cores: {{ cpu?.NumberOfCores }}<br>
-  Max Clock: {{ cpu?.MaxClockSpeed }} MHz
-</div>
+<div class="dashboard">
+  <div class="card">
+    <h3>System</h3>
+    <div>
+      <span class="label">System Type: </span> 
+      <span class="value">{{ sys?.SystemType }}</span>
+    </div>
+  </div>
 
-<h2>Memory</h2>
-<div>
-  Capacity: {{ mem?.TotalVisibleMemorySize }} <br>
-  Free: {{ mem?.FreePhysicalMemory }} <br>
-</div>
+  <div class="card">
+    <h3>CPU</h3>
 
-<h2>Disk</h2>
-<div>
-  Volume Name: {{ disk?.VolumeName }} <br>
-  Size: {{ disk?.Size }} <br>
-  Free Space: {{ disk?.FreeSpace }} <br>
-</div>
+    <div>
+      <span class="label">Name: </span> 
+        <span class="value">{{ cpu?.Name }}</span><br>
+      <span class="label">Cores: </span> 
+        <span class="value">{{ cpu?.NumberOfCores }}</span><br>
+      <span class="label">Max Clock: </span> 
+        <span class="value">{{ cpu?.MaxClockSpeed }} MHz</span>
+    </div>
 
-<h2>System</h2>
-<div>
-  System Type: {{ sys?.SystemType }} <br>
+  </div>
+
+  <div class="card">
+    <h3>Memory</h3>
+
+    <div>
+      <span class="label">Capacity: </span> 
+        <span class="value">{{ mem?.TotalVisibleMemorySize }}</span><br>
+      <span class="label">Free: </span> 
+        <span class="value">{{ mem?.FreePhysicalMemory }}</span>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h3>Disk</h3>
+
+    <div>
+      <span class="label">Volume Name: </span> 
+        <span class="value">{{ disk?.VolumeName }}</span><br>
+      <span class="label">Size: </span> 
+        <span class="value">{{ disk?.Size }}</span><br>
+      <span class="label">Free Space: </span> 
+        <span class="value">{{ disk?.FreeSpace }}</span>
+    </div>
+
+  </div>
 </div>
