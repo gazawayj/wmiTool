@@ -10,7 +10,7 @@ export class SystemService {
   constructor(private http: HttpClient) {}
 
   getCPU() { return this.http.get(`${this.backendUrl}/api/cpu`); }
-  getMem() { return this.http.get(`${this.backendUrl}/api/mem`); }
+  getMem() { return this.http.get(`${this.backendUrl}/api/memory`); }
   getDisk() { return this.http.get(`${this.backendUrl}/api/disk`);}
   getSys() { return this.http.get(`${this.backendUrl}/api/sys`);}
 }
