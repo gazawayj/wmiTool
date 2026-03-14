@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { SystemService } from '../../services/wmi.service';
 
 @Component({
