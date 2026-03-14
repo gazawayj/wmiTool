@@ -5,7 +5,7 @@ import { SystemService } from '../../services/wmi.service';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],  // needed for *ngIf
+  imports: [CommonModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })

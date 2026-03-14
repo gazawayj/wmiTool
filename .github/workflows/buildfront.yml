@@ -22,7 +22,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./frontend
+        working-directory: ./frontend/wmiTool-client
 
     steps:
       - name: Checkout repository
@@ -50,7 +50,7 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: frontend/dist/frontend
+          path: frontend/wmiTool-client/dist/wmiTool-client
 
   deploy:
     needs: build
