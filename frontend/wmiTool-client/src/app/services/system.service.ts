@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class SystemService {
 
-  backendUrl = 'http://ec2-16-58-21-42.us-east-2.compute.amazonaws.com:3000';
+  backendUrl = 'https://ec2-16-58-21-42.us-east-2.compute.amazonaws.com:3000';
 
   /**
    * Constructor for SystemService.
