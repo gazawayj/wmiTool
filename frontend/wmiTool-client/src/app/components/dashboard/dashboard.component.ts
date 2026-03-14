@@ -16,9 +16,6 @@ export class DashboardComponent implements OnInit {
   private platformId = inject(PLATFORM_ID);
 
   ngOnInit() {
-    // Run HTTP calls only in the browser
-    if (isPlatformBrowser(this.platformId)) {
-      this.sys.getCPU().subscribe(data => this.cpu = data);
-    }
+    this.sys.getCPU().subscribe(data => this.cpu = data);
   }
 }

@@ -1,2 +1,4 @@
 # wmiTool
-Learning too being created to learn WMI
+Learning tool being created to learn WMI.
+
+Currently
