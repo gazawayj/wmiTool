@@ -5,7 +5,7 @@ wmiTool is a lightweight learning project to explore **Windows Management Instru
 
 ## Live Demo
 https://gazawayj.github.io/wmiTool/
->>> Hosted on GitHub Pages (frontend) and AWS EC2 (backend)
+> Hosted on GitHub Pages (frontend) and AWS EC2 (backend)
 
 ---
 
