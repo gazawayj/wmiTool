@@ -2,11 +2,11 @@
    CSS Variables
    ============================== */
 :root {
-  --primary-color: #db9c13;
-  --background-color: #f0f2f5;
-  --card-background: #ffffff;
-  --card-border-color: #ecf0f1;
-  --label-color: #db9c13;
+  --primary-color: #b6903f;
+  --background-color: #f5f4f0;
+  --card-background: #eeeeee;
+  --card-border-color: #f1eede;
+  --label-color: #4d3e1f;
 }
 
 /* ==============================
