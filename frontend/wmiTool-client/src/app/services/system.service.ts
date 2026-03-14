@@ -88,9 +88,17 @@ export class SystemService {
    * @returns Value converted to GiB.
    */
   bytesToGiB(bytes: number): number {
-    if (!bytes) return 0;
+    if (bytes <= 1) return bytes;
+    
+    const units = ["Bytes", "KB", "MB", "GB", "TB", "PB"];
+    let i = 0;
+    let size = bytes;
 
-    const gibibyte = Math.pow(1024, 3);
-    return bytes / gibibyte;
+    while (size >= 1024 && i < units.length - 1) {
+        size /= 1024;
+        i++;
+    }
+
+    return size;
   }
 }
