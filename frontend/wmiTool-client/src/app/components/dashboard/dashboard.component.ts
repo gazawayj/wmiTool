@@ -66,16 +66,16 @@ export class DashboardComponent implements OnInit {
         this.mem = data.mem;
         if (data.mem){
           const formatTotal = Number(this.sysServ.bytesToFormat(data.mem.TotalVisibleMemorySize)).toPrecision(3);
-          data.mem.TotalVisibleMemorySize = formatTotal;
+          this.mem.TotalVisibleMemorySize = formatTotal;
           const formatFree = Number(this.sysServ.bytesToFormat(data.mem.FreePhysicalMemory)).toPrecision(3);
-          data.mem.FreePhysicalMemory = formatFree;
+          this.mem.FreePhysicalMemory = formatFree;
         }
         this.disk = data.disk;
         if (data.disk){
           const formatTotal = Number(this.sysServ.bytesToFormat(data.disk.Size)).toPrecision(3);
-          data.disk.Size = formatTotal;
+          this.disk.Size = formatTotal;
           const formatFree = Number(this.sysServ.bytesToFormat(data.disk.FreeSpace)).toPrecision(3);
-          data.disk.FreeSpace = formatFree;
+          this.disk.FreeSpace = formatFree;
         }
         this.sys = data.sys;
 
