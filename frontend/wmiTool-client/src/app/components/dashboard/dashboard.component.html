@@ -1,10 +1,13 @@
 <h1>System Dashboard</h1>
 
+<h2>Server Hardware</h2>
+
 <div class="dashboard">
+
   <div class="card">
     <h3>System</h3>
     <div>
-      <span class="label">System Type: </span> 
+      <span class="label">System Type: </span>
       <span class="value">{{ sys?.SystemType }}</span>
     </div>
   </div>
@@ -13,14 +16,17 @@
     <h3>CPU</h3>
 
     <div>
-      <span class="label">Name: </span> 
-        <span class="value">{{ cpu?.Name }}</span><br>
-      <span class="label">Cores: </span> 
-        <span class="value">{{ cpu?.NumberOfCores }}</span><br>
-      <span class="label">Max Clock: </span> 
-        <span class="value">{{ cpu?.MaxClockSpeed }} MHz</span> <br>
-      <span class="label"> Load Percentage: </span>
-        <span class = "value">{{ cpu?.LoadPercentage }} </span> <br>
+      <span class="label">Name: </span>
+      <span class="value">{{ cpu?.Name }}</span><br>
+
+      <span class="label">Cores: </span>
+      <span class="value">{{ cpu?.NumberOfCores }}</span><br>
+
+      <span class="label">Max Clock: </span>
+      <span class="value">{{ cpu?.MaxClockSpeed }} MHz</span><br>
+
+      <span class="label">Load Percentage: </span>
+      <span class="value">{{ cpu?.LoadPercentage }}%</span>
     </div>
 
   </div>
@@ -29,10 +35,11 @@
     <h3>Memory</h3>
 
     <div>
-      <span class="label">Capacity: </span> 
-        <span class="value">{{ mem?.TotalVisibleMemorySize }}</span><br>
-      <span class="label">Free: </span> 
-        <span class="value">{{ mem?.FreePhysicalMemory }}</span>
+      <span class="label">Capacity: </span>
+      <span class="value">{{ mem?.TotalVisibleMemorySize }}</span><br>
+
+      <span class="label">Free: </span>
+      <span class="value">{{ mem?.FreePhysicalMemory }}</span>
     </div>
 
   </div>
@@ -41,13 +48,68 @@
     <h3>Disk</h3>
 
     <div>
-      <span class="label">Volume Name: </span> 
-        <span class="value">{{ disk?.VolumeName }}</span><br>
-      <span class="label">Size: </span> 
-        <span class="value">{{ disk?.Size }}</span><br>
-      <span class="label">Free Space: </span> 
-        <span class="value">{{ disk?.FreeSpace }}</span>
+      <span class="label">Volume Name: </span>
+      <span class="value">{{ disk?.VolumeName }}</span><br>
+
+      <span class="label">Size: </span>
+      <span class="value">{{ disk?.Size }}</span><br>
+
+      <span class="label">Free Space: </span>
+      <span class="value">{{ disk?.FreeSpace }}</span>
     </div>
 
   </div>
+
+</div>
+
+<h2>Client Hardware</h2>
+
+<div class="dashboard">
+
+  <div class="card">
+    <h3>Client System</h3>
+
+    <div>
+      <span class="label">Platform: </span>
+      <span class="value">{{ clientPlatform }}</span><br>
+
+      <span class="label">User Agent: </span>
+      <span class="value">{{ clientUserAgent }}</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Client CPU</h3>
+
+    <div>
+      <span class="label">Threads: </span>
+      <span class="value">{{ clientCpuThreads }}</span>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h3>Client Memory</h3>
+    <div>
+      <span class="label">Approx RAM: </span>
+      <span class="value">{{ clientMemory }}</span>
+    </div>
+
+
+  </div>
+
+  <div class="card">
+    <h3>Client Display</h3>
+    <div>
+      <span class="label">Resolution: </span>
+      <span class="value">{{ clientScreen }}</span>
+    </div>
+
+
+  </div>
+
+</div>
+
+<div class="last-update">
+  <small>Last updated: {{ lastUpdate | date:'medium' }}</small>
 </div>

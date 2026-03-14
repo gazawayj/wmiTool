@@ -6,7 +6,7 @@
   --background-color: #f5f4f0;
   --card-background: #eeeeee;
   --card-border-color: #f1eede;
-  --label-color: #4d3e1f;
+  --label-color: #886f3d;
 }
 
 /* ==============================
@@ -14,8 +14,8 @@
    ============================== */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--background-color, #f0f2f5);
-  color: var(--primary-color, #000);
+  background-color: var(--card-background);
+  color: var(--primary-color);
   margin: 20px;
 }
 
@@ -24,8 +24,12 @@ body {
    ============================== */
 h1 {
   text-align: center;
-  color: var(--primary-color, #000);
+  color: var(--label-color);
   margin-bottom: 40px;
+}
+
+h2 {
+  justify-self: center;
 }
 
 /* ==============================
@@ -41,17 +45,11 @@ h1 {
    Card style for each section
    ============================== */
 .card {
-  background-color: var(--card-background, #fff);
+  background-color: var(--background-color);
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   transition: transform 0.2s, box-shadow 0.2s;
-}
-
-/* Card hover effect */
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 
 /* ==============================
@@ -60,10 +58,9 @@ h1 {
 .card h3 {
   margin-top: 0;
   margin-bottom: 15px;
-  font-size: 1.2em;
-  color: var(--primary-color, #000);
-  border-bottom: 2px solid var(--card-border-color, #ecf0f1);
-  padding-bottom: 5px;
+  font-size: 1.2rem;
+  color: var(--label-color);
+  border-bottom: 2px solid var(--card-border-color);
 }
 
 /* ==============================
@@ -77,4 +74,9 @@ h1 {
 .card div span.label {
   font-weight: 600;
   color: var(--label-color, #000);
+}
+
+.last-update {
+  justify-self: end;
+  margin: 8px;
 }
