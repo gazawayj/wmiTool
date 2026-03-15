@@ -89,16 +89,13 @@ export class SystemService {
    */
   bytesToFormat(bytes: number){
     if (bytes <= 1) return bytes;
-    
     const units = ["Bytes", "KB", "MB", "GB", "TB", "PB"];
     let i = 0;
     let size = bytes;
-
     while (size >= 1024 && i < units.length - 1) {
         size /= 1024;
         i++;
     }
-
     return size;
   }
 }

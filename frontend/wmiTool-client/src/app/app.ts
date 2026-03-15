@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardComponent } from './components/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
 
 @Component({

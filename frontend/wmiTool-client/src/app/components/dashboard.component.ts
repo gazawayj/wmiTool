@@ -1,6 +1,6 @@
 import { Component, OnInit, inject, Inject, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { SystemService } from '../../services/system.service';
+import { SystemService } from '../services/system.service';
 import { forkJoin } from 'rxjs';
 
 /**
