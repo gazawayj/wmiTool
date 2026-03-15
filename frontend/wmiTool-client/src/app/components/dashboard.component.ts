@@ -1,14 +1,18 @@
-import { Component, OnInit, inject, Inject, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
+import { 
+  Component, 
+  OnInit, 
+  OnDestroy, 
+  inject, 
+  Inject, 
+  PLATFORM_ID, 
+  ViewEncapsulation, 
+  ChangeDetectorRef
+} from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { SystemService } from '../services/system.service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, timer, Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
-/**
- * DashboardComponent
- *
- * Displays server hardware information from the backend API
- * and client hardware information collected from browser APIs.
- */
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -17,17 +21,15 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./dashboard.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
-  /* ---------------- Server Hardware ---------------- */
-
+  /* Server hardware */
   cpu: any;
   mem: any;
   disk: any;
   sys: any;
 
-  /* ---------------- Client Hardware ---------------- */
-
+  /* Client hardware */
   clientPlatform: string | undefined;
   clientCpuThreads: number | string | undefined;
   clientMemory: string | undefined;
@@ -37,65 +39,62 @@ export class DashboardComponent implements OnInit {
   lastUpdate!: Date;
 
   private sysServ = inject(SystemService);
+  private changeDetect = inject(ChangeDetectorRef);
+  private refreshSub?: Subscription;
 
-  /**
-   * Constructor used for platform detection.
-   *
-   * @param platformId Angular platform identifier
-   */
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
-  /**
-   * Angular lifecycle hook executed on component initialization.
-   *
-   * Retrieves server hardware information and client hardware
-   * information when running inside a browser environment.
-   */
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      
+      // Get Client Info
+      const client = this.sysServ.getClientInfo();
+      this.clientPlatform = client.platform;
+      this.clientCpuThreads = client.cpuThreads;
+      this.clientMemory = client.deviceMemory;
+      this.clientScreen = client.screenResolution;
+      this.clientUserAgent = client.userAgent;
 
-    forkJoin({
-      cpu: this.sysServ.getCPU(),
-      mem: this.sysServ.getMem(),
-      disk: this.sysServ.getDisk(),
-      sys: this.sysServ.getSys()
-    }).subscribe({
-      next: data => {
+      // Start the refresh timer
+      this.refreshSub = timer(0, 5000)
+        .pipe(
+          switchMap(() => forkJoin({
+            cpu: this.sysServ.getCPU(),
+            mem: this.sysServ.getMem(),
+            disk: this.sysServ.getDisk(),
+            sys: this.sysServ.getSys()
+          }))
+        )
+        .subscribe({
+          next: (data: any) => {
+            this.cpu = data.cpu;
+            this.sys = data.sys;
 
-        /* Server hardware */
-        this.cpu = data.cpu;
-        this.mem = data.mem;
-        if (data.mem){
-          const formatTotal = Number(this.sysServ.bytesToFormat(data.mem.TotalVisibleMemorySize).toPrecision(3));
-          this.mem.TotalVisibleMemorySize = formatTotal;
-          const formatFree = Number(this.sysServ.bytesToFormat(data.mem.FreePhysicalMemory).toPrecision(3));
-          this.mem.FreePhysicalMemory = formatFree;
-        }
-        this.disk = data.disk;
-        if (data.disk){
-          const formatTotal = Number(this.sysServ.bytesToFormat(data.disk.Size).toPrecision(3));
-          this.disk.Size = formatTotal;
-          const formatFree = Number(this.sysServ.bytesToFormat(data.disk.FreeSpace).toPrecision(3));
-          this.disk.FreeSpace = formatFree;
-        }
-        this.sys = data.sys;
+            if (data.mem) {
+              this.mem = data.mem;
+              this.mem.TotalVisibleMemorySize = Number(this.sysServ.bytesToFormat(data.mem.TotalVisibleMemorySize).toPrecision(3));
+              this.mem.FreePhysicalMemory = Number(this.sysServ.bytesToFormat(data.mem.FreePhysicalMemory).toPrecision(3));
+            }
 
-        this.lastUpdate = new Date();
+            if (data.disk) {
+              this.disk = data.disk;
+              this.disk.Size = Number(this.sysServ.bytesToFormat(data.disk.Size).toPrecision(3));
+              this.disk.FreeSpace = Number(this.sysServ.bytesToFormat(data.disk.FreeSpace).toPrecision(3));
+            }
 
-        /* Client hardware */
-        if (isPlatformBrowser(this.platformId)) {
+            this.lastUpdate = new Date();
 
-          const client = this.sysServ.getClientInfo();
+            // Force Angular to update the UI
+            this.changeDetect.markForCheck();
+          },
+          error: err => console.error('Data fetch failed:', err)
+        });
+    }
+  }
 
-          this.clientPlatform = client.platform;
-          this.clientCpuThreads = client.cpuThreads;
-          this.clientMemory = client.deviceMemory;
-          this.clientScreen = client.screenResolution;
-          this.clientUserAgent = client.userAgent;
-        }
-      },
-      error: err => {
-        console.error('Failed to fetch system data:', err);
-      }
-    });
+  ngOnDestroy(): void {
+    if (this.refreshSub) {
+      this.refreshSub.unsubscribe();
+    }
   }
 }
