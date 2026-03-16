@@ -1,5 +1,5 @@
 # wmiTool
-wmiTool is a lightweight learning project to explore **Windows Management Instrumentation (WMI)** and full-stack development. It collects system information from a server backend and displays it through a modern Angular frontend.
+wmiTool is a lightweight learning project to explore **Windows Management Instrumentation (WMI)** and full-stack development. It collects system information from a server backend and displays it through an Angular frontend.
 
 ---
 
@@ -18,9 +18,9 @@ https://gazawayj.github.io/wmiTool/
 - Served securely through IIS reverse proxy with HTTPS
 
 ### Frontend
-- Angular application displaying server hardware details in a clean dashboard
+- Angular application displaying server hardware details in a dashboard
 - Build deployable to GitHub Pages
-- Consumes backend API for live server data over HTTPS
+- Consumes backend API for live server data over HTTP
 - Also presents client browser info, as remote WMI is not permitted through a browser
 
 ---
