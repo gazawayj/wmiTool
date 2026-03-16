@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class SystemService {
 
-  backendUrl = 'https://api-gazaway-wmitool.workers.dev';
+  backendUrl = 'https://ec2-16-58-21-42.us-east-2.compute.amazonaws.com';
 
   /**
    * Constructor for SystemService.
